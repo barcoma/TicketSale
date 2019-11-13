@@ -2,10 +2,20 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <link rel="stylesheet" href="styles/main.css">
     <title>Reservierung aufheben</title>
 </head>
 <body>
 <h1>Reservierungen aufheben</h1>
-
+<p>Mit dieser Operation werden</p>
+<ul>
+    <li>alle bestehenden Reservierungen gelöscht</li>
+    <li>ab sofort Resevierungen unterbunden</li>
+</ul>
+<form name="verkauf" action="TicketHandler" method="post">
+    <input class="hidden-input" name="methodToExcecute" value="stopReservations"/>
+    <button type="submit" value="Go">Ausführen</button>
+</form>
+<a href="index.jsp">Zurück zur Hauptseite</a>
 </body>
 </html>

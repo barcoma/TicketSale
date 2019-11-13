@@ -1,7 +1,10 @@
+body{
+}
+
 .ticket-container{
   display: flex;
   flex-wrap: wrap;
-  width: 30vw;
+  width: 45vw;
   align-self: center;
 }
 
@@ -37,4 +40,8 @@ nav{
       margin: 1% 0 0 0;
     }
   }
+}
+
+.hidden-input{
+  display: none;
 }

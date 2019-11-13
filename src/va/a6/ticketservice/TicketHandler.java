@@ -9,6 +9,7 @@ import java.io.IOException;
 
 @WebServlet("/TicketHandler")
 public class TicketHandler extends HttpServlet{
+
     public void service(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException{
         if(handleRequest(request)){
             request.getRequestDispatcher("/Operation_erfolgreich_ausgefuehrt.html").forward(request, response);
@@ -17,7 +18,30 @@ public class TicketHandler extends HttpServlet{
         }
     }
 
-    public boolean handleRequest(HttpServletRequest request){
+    public boolean handleRequest(HttpServletRequest request) {
+        TicketSale ticketSale = (TicketSale) request.getServletContext().getAttribute("ticketSale");
+        String methodToExcecute = request.getParameter("methodToExcecute");
+        int ticketId = 0;
+        if(request.getParameterMap().containsKey("ticketId"))
+            ticketId = Integer.parseInt(request.getParameter("ticketId"));
+
+        switch (methodToExcecute){
+            case "buy":
+                return ticketSale.buyTicket(ticketSale.getAllTickets()[ticketId-1]);
+            case "reserveTicket":
+                String ticketOwner = request.getParameter("ticketOwner");
+                return ticketSale.reserveTicket(ticketSale.getAllTickets()[ticketId-1], ticketOwner);
+            case "buyReserved":
+                return ticketSale.buyReservedTicket(ticketSale.getAllTickets()[ticketId-1]);
+            case "stornoTicket":
+                return true;
+            case "stopReservations":
+                return ticketSale.cancelAllReservations();
+
+
+        }
+
+
         return true;
     }
 }

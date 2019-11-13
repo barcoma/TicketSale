@@ -32,22 +32,55 @@
     <%}%>
   </div>
 
+  <%
+      if (ticketSale.isReservationPossible()) {
+  %>
+  <p>Reservierungen können noch angenommen werden</p>
+  <%
+  } else {
+  %>
+  <p>Reservierungen nicht mehr möglich</p>
+  <%
+      }
+  %>
+
  <nav>
      <ul>
          <li>
              <a href="Verkauf_eines_freien_Tickets.html">Ticket kaufen</a>
          </li>
          <li>
-             <a href="Reservierung_eines_Tickets.html">Ticket reservieren</a>
+             <%
+                 if (ticketSale.isReservationPossible()) {
+             %>
+             <a href="Reservierung_eines_Tickets.html">Ticket reservieren</a><br />
+             <%
+             } else {
+             %>
+             <p><s>Ticket reservieren</s></p>
+             <%
+                 }
+             %>
          </li>
          <li>
-             <a href="Verkauf_eines_reservierten_Tickets.html">Reserviertes Ticket kaufen</a>
+
+             <%
+                 if (ticketSale.isReservationPossible()) {
+             %>
+             <a href="Verkauf_eines_reservierten_Tickets.html">Reserviertes Ticket kaufen</a><br />
+             <%
+             } else {
+             %>
+             <p><s>Reserviertes Ticket kaufen</s></p>
+             <%
+                 }
+             %>
          </li>
          <li>
              <a href="Stornierung_eines_Tickets.html">Ticket stornieren</a>
          </li>
          <li>
-             <a href="Reservierungen aufheben.html">Alle Reservierungen aufheben</a>
+             <a href="Reservierungen_aufheben.html">Alle Reservierungen aufheben</a>
          </li>
      </ul>
  </nav>

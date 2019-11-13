@@ -2,9 +2,21 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <link rel="stylesheet" href="styles/main.css">
     <title>Reserviertes Ticket kaufen</title>
 </head>
 <body>
-
+<h1>Reserviertes Ticket kaufen</h1>
+<form name="verkauf" action="TicketHandler" method="post">
+    <label>Sitzplatznummer:
+        <input type="number" name="ticketId" min="1" max="100"/>
+    </label>
+    <label>Name:
+        <input type="text" name="reservationName"/>
+    </label>
+    <input class="hidden-input" name="methodToExcecute" value="buyReserved"/>
+    <button type="submit" value="Go">Go</button>
+</form>
+<a href="index.jsp">Zurück zur Hauptseite</a>
 </body>
 </html>

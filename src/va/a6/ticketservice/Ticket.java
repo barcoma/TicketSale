@@ -13,8 +13,8 @@ public class Ticket {
         return state;
     }
 
-    public void setState(TicketState state) {
-        this.state = state;
+    public void setState(TicketState _state) {
+        this.state = _state;
     }
 
     public String getTicketOwner() {
