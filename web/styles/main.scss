@@ -1,0 +1,40 @@
+.ticket-container{
+  display: flex;
+  flex-wrap: wrap;
+  width: 30vw;
+  align-self: center;
+}
+
+.ticket{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 50px;
+  height: 50px;
+  border: 1px solid black;
+}
+
+.RESERVED{
+  background-color: darkgoldenrod;
+}
+
+.FREE{
+  background-color: darkgreen;
+}
+
+.SOLD{
+  background-color: darkred;
+}
+
+a{
+  color: black;
+}
+
+nav{
+  ul {
+    list-style-type: none;
+    li{
+      margin: 1% 0 0 0;
+    }
+  }
+}

@@ -3,14 +3,10 @@ package va.a6.ticketservice;
 public class Ticket {
     private TicketState state = TicketState.FREE;
     private String ticketOwner;
-    private Integer id;
+    private int id;
 
     Ticket(int _id){
         this.id = _id;
-    }
-
-    public void changeState(TicketState newState){
-        this.state = newState;
     }
 
     public TicketState getState() {
@@ -29,7 +25,7 @@ public class Ticket {
         this.ticketOwner = ticketOwner;
     }
 
-    public Integer getId() {
+    public int getId() {
         return id;
     }
 

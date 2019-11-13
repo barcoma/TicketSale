@@ -1,18 +1,24 @@
 package va.a6.ticketservice;
 
-import java.util.ArrayList;
-
 public class TicketSale {
-    private boolean reservationPossible = true;
 
-    public Ticket[] ticketList = new Ticket[100];
+    private Ticket[] allTickets = new Ticket[100];
+    private boolean reservationPossible = true;
 
     public TicketSale(){
 
-        for(int i = 0; i < ticketList.length; i++ ){
-            ticketList[i]= new Ticket(i+1);
+        for(int i = 0; i < allTickets.length; i++ ){
+            this.allTickets[i]= new Ticket(i+1);
         }
 
+    }
+
+    public Ticket[] getAllTickets(){
+        return allTickets;
+    }
+
+    public void setReservationStatus(boolean _reservationPossible){
+        this.reservationPossible = _reservationPossible;
     }
 
     public boolean buyTicket(Ticket ticket) throws TicketSaleException {
@@ -40,6 +46,22 @@ public class TicketSale {
         if(ticket.getState() == TicketState.RESERVED){
             ticket.setState(TicketState.FREE);
             ticket.setTicketOwner("");
+        }
+        return true;
+    }
+
+    public boolean cancelAllReservations(){
+        for(int i = 0; i < allTickets.length; i++ ){
+            allTickets[i]= new Ticket(i+1);
+            if(allTickets[i].getState() == TicketState.RESERVED)
+                allTickets[i].setState(TicketState.FREE);
+        }
+        return true;
+    }
+
+    public boolean buyReservedTicket(Ticket ticket){
+        if(ticket.getState() == TicketState.RESERVED){
+            ticket.setState(TicketState.SOLD);
         }
         return true;
     }
