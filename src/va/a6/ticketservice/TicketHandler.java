@@ -33,11 +33,10 @@ public class TicketHandler extends HttpServlet{
                 return ticketSale.reserveTicket(ticketSale.getAllTickets()[ticketId-1], ticketOwner);
             case "buyReserved":
                 return ticketSale.buyReservedTicket(ticketSale.getAllTickets()[ticketId-1]);
-            case "stornoTicket":
-                return true;
+            case "cancelTicket":
+                return ticketSale.cancelReservation(ticketSale.getAllTickets()[ticketId-1]);
             case "stopReservations":
                 return ticketSale.cancelAllReservations();
-
 
         }
 

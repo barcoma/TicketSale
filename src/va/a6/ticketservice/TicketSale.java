@@ -46,7 +46,7 @@ public class TicketSale {
     }
 
     public synchronized boolean cancelReservation(Ticket ticket) throws TicketSaleException{
-        if(ticket.getState() == TicketState.RESERVED){
+        if (ticket.getState() == TicketState.RESERVED || ticket.getState() == TicketState.SOLD) {
             ticket.setState(TicketState.FREE);
             ticket.setTicketOwner("");
         }

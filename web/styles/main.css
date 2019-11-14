@@ -41,4 +41,34 @@ nav ul li {
   display: none;
 }
 
+.dropdown-menu {
+  position: absolute;
+  z-index: 1000;
+  display: none;
+  min-width: 160px;
+  padding: 5px 0;
+  margin: 0 0 0 0;
+  list-style: none;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
+  background-clip: padding-box;
+}
+
+.dropdown-menu a {
+  text-decoration: none;
+}
+
+.dropdown-menu a li {
+  font-size: 12px;
+  font-family: arial, sans-serif;
+  color: #222;
+  padding: 5px 15px;
+}
+
+.dropdown-menu a li:hover {
+  background-color: #bae2fc;
+}
+
 /*# sourceMappingURL=main.css.map */
