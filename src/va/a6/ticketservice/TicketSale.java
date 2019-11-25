@@ -1,15 +1,18 @@
 package va.a6.ticketservice;
 
+import javax.sql.DataSource;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+
 public class TicketSale {
 
     private Ticket[] allTickets = new Ticket[100];
     private boolean reservationPossible = true;
 
-    public TicketSale(){
 
-        for(int i = 0; i < allTickets.length; i++ ){
-            this.allTickets[i]= new Ticket(i+1);
-        }
+    public TicketSale(){
 
     }
 
@@ -26,12 +29,21 @@ public class TicketSale {
         return true;
     }
 
-    public synchronized  boolean buyTicket(Ticket ticket) throws TicketSaleException {
-        if (ticket.getState() == TicketState.FREE)
-            ticket.setState(TicketState.SOLD);
-        else if(ticket.getState() == TicketState.RESERVED || ticket.getState() == TicketState.SOLD )
-            throw new TicketSaleException("Ticket bereits reserviert.");
-        return true;
+    public synchronized  boolean buyTicket(int id, DataSource dataSource) throws TicketSaleException, SQLException {
+        try {
+            Connection connection = dataSource.getConnection();
+            Statement statement = connection.createStatement();
+            return true;
+        } catch (SQLException e){
+            System.out.println("Fehler" + e);
+            throw new RuntimeException();
+        }
+//        if (ticket.getState() == TicketState.FREE)
+//            ticket.setState(TicketState.SOLD);
+//        else if(ticket.getState() == TicketState.RESERVED || ticket.getState() == TicketState.SOLD )
+//            throw new TicketSaleException("Ticket bereits reserviert.");
+//        return true;
+
     }
 
     public synchronized boolean reserveTicket(Ticket ticket, String ticketOwner) throws TicketSaleException{

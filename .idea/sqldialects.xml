@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="SqlDialectMappings">
+    <file url="file://$PROJECT_DIR$/src/va/a6/ticketservice/DatabaseHandler.java" dialect="GenericSQL" />
+    <file url="file://$PROJECT_DIR$/src/va/a6/ticketservice/MyServletContextListener.java" dialect="GenericSQL" />
+    <file url="file://$PROJECT_DIR$/src/va/a6/ticketservice/TicketHandler.java" dialect="GenericSQL" />
+    <file url="file://$PROJECT_DIR$/src/va/a6/ticketservice/TicketSale.java" dialect="GenericSQL" />
+  </component>
+</project>

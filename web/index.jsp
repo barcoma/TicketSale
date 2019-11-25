@@ -6,6 +6,9 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page import="va.a6.ticketservice.TicketSale" %>
+<%@ page import="java.sql.ResultSet" %>
+<%@ page import="java.sql.SQLException" %>
+<%@ page import="java.util.List" %>
 <%@ page import="va.a6.ticketservice.Ticket" %>
 
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
@@ -18,34 +21,37 @@
   <%
     ServletContext sc = request.getServletContext();
     TicketSale ticketSale = (TicketSale) sc.getAttribute("ticketSale");
+    List<Ticket> rs = (List<Ticket>) sc.getAttribute("initialStates");
   %>
   <h1>Ticket Verkauf</h1>
   <div class="ticket-container">
       <%
-      for(int i = 0; i < ticketSale.getAllTickets().length; i++){
+          for(Ticket type:rs){
+
+      //for(int i = 0; i < ticketSale.getAllTickets().length; i++){
       %>
       <div>
-      <div class="ticket <%= ticketSale.getAllTickets()[i].getState()%>">
+      <div class="ticket <%= type.getState()%>">
         <%=
-          ticketSale.getAllTickets()[i].getId()
+          type.getId()
         %>
       </div>
           <ul class="dropdown-menu">
               <li>
                   <form name="verkauf" action="TicketHandler" method="post">
                       <input class="hidden-input" name="methodToExcecute" value="buy"/>
-                      <input class="hidden-input" name="ticketId" value="<%=ticketSale.getAllTickets()[i].getId() %>"/>
+                      <input class="hidden-input" name="ticketId" value="<%=type.getId() %>"/>
                       <button type="submit">Ticket kaufen</button>
                   </form>
               </li>
               <li>
-                  <%
-                      if (ticketSale.isReservationPossible()) {
-                  %>
-                  <a href="Reservierung_eines_Tickets.html">Ticket reservieren</a><br/>
-                  <%
-                  } else {
-                  %>
+                    <%
+                        if (ticketSale.isReservationPossible()) {
+                    %>
+                    <a href="Reservierung_eines_Tickets.html">Ticket reservieren</a><br/>
+                    <%
+                      } else {
+                     %>
                   <p><s>Ticket reservieren</s></p>
                   <%
                       }
@@ -68,7 +74,7 @@
               <li>
                   <form name="verkauf" action="TicketHandler" method="post">
                       <input class="hidden-input" name="methodToExcecute" value="cancelTicket"/>
-                      <input class="hidden-input" name="ticketId" value="<%=ticketSale.getAllTickets()[i].getId() %>"/>
+                      <input class="hidden-input" name="ticketId" value="<%=type.getId() %>"/>
                       <button type="submit">Ticket storno</button>
                   </form>
               </li>
@@ -148,9 +154,8 @@
           if(otherSelected){
               closeAll();
           }
-          var btn=this;
           parent = this;
-          var menu = btn.nextSibling;
+          var menu = parent.nextSibling;
           while(menu && menu.nodeType !== 1) {
               menu = menu.nextSibling
           }
@@ -158,7 +163,8 @@
           if (menu.style.display !== 'block') {
               menu.style.display = 'block';
               this.style.backgroundColor = "blue";
-              if(toClose) toClose.style.display="none";
+              if(toClose)
+                  toClose.style.display="none";
               toClose  = menu;
               otherSelected = true;
           }  else {
@@ -171,6 +177,8 @@
           toClose.style.display='none';
           parent.style.backgroundColor = "";
           otherSelected = false;
+          toClose = false;
+          parent = null;
       }
 
       window.addEventListener("DOMContentLoaded",function(){

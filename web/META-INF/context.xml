@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Context>
+    <Resource name="jdbc/tickets"
+              auth="Container" type="javax.sql.DataSource"
+              username="user" password="password"
+              driverClassName="com.mysql.cj.jdbc.Driver"
+              url="jdbc:mysql://localhost/tickets" maxActive="20" maxIdle="10"
+              removeAbandoned="true" removeAbandonedTimeout="300"
+              logAbandoned="true"/>
+
+</Context>
