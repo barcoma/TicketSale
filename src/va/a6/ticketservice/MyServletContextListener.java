@@ -15,31 +15,32 @@ import java.util.List;
 
 @WebListener
 public class MyServletContextListener implements ServletContextListener {
+    public static ServletContext ctx;
 
     public void contextInitialized(ServletContextEvent servletContextEvent) {
-        ServletContext servletContext = servletContextEvent.getServletContext();
+        ctx = servletContextEvent.getServletContext();
         DataSource dataSource;
         try{
             Context initialContext = new InitialContext();
             Context context = (Context) initialContext.lookup("java:comp/env");
             dataSource = (DataSource) context.lookup("jdbc/tickets");
-            servletContext.setAttribute("dataSource", dataSource);
+            ctx.setAttribute("dataSource", dataSource);
             System.out.println("Datenbanktest erfolgreich");
         } catch (Exception e){
             System.out.println("Fehler" + e);
             throw new RuntimeException();
         }
-        TicketSale ticketSale = new TicketSale();
-        boolean isReservationModalOpened = false;
-        servletContext.setAttribute("initialStates", getInitialStates(dataSource));
-        servletContext.setAttribute("ticketSale", ticketSale);
+        TicketSale ticketSale = new TicketSale(getTicketStatesFromDB(dataSource));
+        ctx.setAttribute("ticketSale", ticketSale);
+        ctx.setAttribute("dataSource", dataSource);
+
     }
 
     public void contextDestroyed(ServletContextEvent servletContextEvent) {
 
     }
 
-    public List<Ticket> getInitialStates(DataSource dataSource){
+    private List<Ticket> getTicketStatesFromDB(DataSource dataSource){
         try {
             Connection connection = dataSource.getConnection();
             Statement statement = connection.createStatement();

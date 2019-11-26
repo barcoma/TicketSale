@@ -1,22 +1,19 @@
 package va.a6.ticketservice;
 
-import javax.sql.DataSource;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.util.List;
 
 public class TicketSale {
 
-    private Ticket[] allTickets = new Ticket[100];
+    private DatabaseUpdate databaseUpdate = new DatabaseUpdate();
+    private List<Ticket> allTickets;
     private boolean reservationPossible = true;
 
 
-    public TicketSale(){
-
+    public TicketSale(List<Ticket> initialList){
+        allTickets = initialList;
     }
 
-    public  Ticket[] getAllTickets(){
+    public  List<Ticket> getAllTickets(){
         return allTickets;
     }
 
@@ -29,46 +26,43 @@ public class TicketSale {
         return true;
     }
 
-    public synchronized  boolean buyTicket(int id, DataSource dataSource) throws TicketSaleException, SQLException {
-        try {
-            Connection connection = dataSource.getConnection();
-            Statement statement = connection.createStatement();
-            return true;
-        } catch (SQLException e){
-            System.out.println("Fehler" + e);
-            throw new RuntimeException();
-        }
-//        if (ticket.getState() == TicketState.FREE)
-//            ticket.setState(TicketState.SOLD);
-//        else if(ticket.getState() == TicketState.RESERVED || ticket.getState() == TicketState.SOLD )
-//            throw new TicketSaleException("Ticket bereits reserviert.");
-//        return true;
+    public synchronized  boolean buyTicket(Ticket ticket){
 
+        if (ticket.getState() == TicketState.FREE) {
+            ticket.setState(TicketState.SOLD);
+            databaseUpdate.updateDB(ticket);
+            return true;
+        }
+        throw new TicketSaleException(ticket.getState());
     }
 
-    public synchronized boolean reserveTicket(Ticket ticket, String ticketOwner) throws TicketSaleException{
+    public synchronized boolean reserveTicket(Ticket ticket, String ticketOwner){
         if(reservationPossible) {
             if (ticket.getState() == TicketState.FREE) {
                 ticket.setState(TicketState.RESERVED);
                 ticket.setTicketOwner(ticketOwner);
+                databaseUpdate.updateDB(ticket);
+                return true;
             }
-            return true;
+            throw new TicketSaleException(ticket.getState());
         }
-        throw new TicketSaleException("edit error handling");
+        throw new TicketSaleException(ticket.getState());
     }
 
-    public synchronized boolean cancelReservation(Ticket ticket) throws TicketSaleException{
+    public synchronized boolean cancelReservation(Ticket ticket){
         if (ticket.getState() == TicketState.RESERVED || ticket.getState() == TicketState.SOLD) {
             ticket.setState(TicketState.FREE);
             ticket.setTicketOwner("");
+            databaseUpdate.updateDB(ticket);
+            return true;
         }
-        return true;
+        throw new TicketSaleException(ticket.getState());
     }
 
     public synchronized boolean cancelAllReservations(){
-        for(int i = 0; i < allTickets.length; i++ ){
-            if(allTickets[i].getState() == TicketState.RESERVED)
-                allTickets[i].setState(TicketState.FREE);
+        for (Ticket allTicket : allTickets) {
+            if (allTicket.getState() == TicketState.RESERVED)
+                allTicket.setState(TicketState.FREE);
         }
         setReservationStatus(false);
         return true;
@@ -77,8 +71,10 @@ public class TicketSale {
     public synchronized boolean buyReservedTicket(Ticket ticket){
         if(ticket.getState() == TicketState.RESERVED){
             ticket.setState(TicketState.SOLD);
+            databaseUpdate.updateDB(ticket);
+            return true;
         }
-        return true;
+      throw new TicketSaleException(ticket.getState());
     }
 
 

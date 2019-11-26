@@ -6,8 +6,6 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page import="va.a6.ticketservice.TicketSale" %>
-<%@ page import="java.sql.ResultSet" %>
-<%@ page import="java.sql.SQLException" %>
 <%@ page import="java.util.List" %>
 <%@ page import="va.a6.ticketservice.Ticket" %>
 
@@ -21,26 +19,22 @@
   <%
     ServletContext sc = request.getServletContext();
     TicketSale ticketSale = (TicketSale) sc.getAttribute("ticketSale");
-    List<Ticket> rs = (List<Ticket>) sc.getAttribute("initialStates");
+    List<Ticket> ticketList = ticketSale.getAllTickets();
   %>
   <h1>Ticket Verkauf</h1>
   <div class="ticket-container">
-      <%
-          for(Ticket type:rs){
-
-      //for(int i = 0; i < ticketSale.getAllTickets().length; i++){
-      %>
+      <% for(Ticket ticket: ticketList){ %>
       <div>
-      <div class="ticket <%= type.getState()%>">
+      <div class="ticket <%= ticket.getState()%>">
         <%=
-          type.getId()
+          ticket.getId()
         %>
       </div>
           <ul class="dropdown-menu">
               <li>
                   <form name="verkauf" action="TicketHandler" method="post">
                       <input class="hidden-input" name="methodToExcecute" value="buy"/>
-                      <input class="hidden-input" name="ticketId" value="<%=type.getId() %>"/>
+                      <input class="hidden-input" name="ticketId" value="<%=ticket.getId() %>"/>
                       <button type="submit">Ticket kaufen</button>
                   </form>
               </li>
@@ -74,7 +68,7 @@
               <li>
                   <form name="verkauf" action="TicketHandler" method="post">
                       <input class="hidden-input" name="methodToExcecute" value="cancelTicket"/>
-                      <input class="hidden-input" name="ticketId" value="<%=type.getId() %>"/>
+                      <input class="hidden-input" name="ticketId" value="<%=ticket.getId() %>"/>
                       <button type="submit">Ticket storno</button>
                   </form>
               </li>

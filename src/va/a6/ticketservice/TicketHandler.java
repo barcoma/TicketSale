@@ -43,14 +43,14 @@ public class TicketHandler extends HttpServlet{
 
         switch (methodToExcecute){
             case "buy":
-                return ticketSale.buyTicket(ticketId, dataSource);
+                return ticketSale.buyTicket(ticketSale.getAllTickets().get(ticketId -1));
             case "reserveTicket":
                 String ticketOwner = request.getParameter("ticketOwner");
-                return ticketSale.reserveTicket(ticketSale.getAllTickets()[ticketId-1], ticketOwner);
+                return ticketSale.reserveTicket(ticketSale.getAllTickets().get(ticketId - 1), ticketOwner);
             case "buyReserved":
-                return ticketSale.buyReservedTicket(ticketSale.getAllTickets()[ticketId-1]);
+                return ticketSale.buyReservedTicket(ticketSale.getAllTickets().get(ticketId - 1));
             case "cancelTicket":
-                return ticketSale.cancelReservation(ticketSale.getAllTickets()[ticketId-1]);
+                return ticketSale.cancelReservation(ticketSale.getAllTickets().get(ticketId - 1));
             case "stopReservations":
                 return ticketSale.cancelAllReservations();
 
@@ -60,23 +60,4 @@ public class TicketHandler extends HttpServlet{
         return true;
     }
 
-    public void connectDatabase(){
-        try {
-            Connection connection = dataSource.getConnection();
-            Statement statement = connection.createStatement();
-            List<Ticket> list = new ArrayList<>();
-            ResultSet rs = statement.executeQuery("SELECT * FROM ticket");
-
-            while (rs.next()) {
-                Ticket ticket = new Ticket(rs.getInt("id"));
-                ticket.setState(TicketState.FREE);
-                ticket.setTicketOwner(rs.getString("owner"));
-                list.add(ticket);
-            }
-            System.out.println(list);
-        } catch (SQLException e){
-            System.out.println("Fehler" + e);
-            throw new RuntimeException();
-        }
-    }
 }
