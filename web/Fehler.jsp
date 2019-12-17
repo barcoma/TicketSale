@@ -1,5 +1,5 @@
-<%@ page import="va.a6.ticketservice.TicketSaleException" isErrorPage="true" %>
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ page isErrorPage="true" %>
+<%@page contentType="text/html" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -10,7 +10,8 @@
 <h3>Leider ist ein Fehler aufgetreten.</h3>
 <p>Die Operation konnte nicht ausgeführt werden</p>
 <%--    <p>Ursache: <%= ((TicketException)exception).showCorrectError() %></p>--%>
-<p>Ursache: <%= exception.getMessage() %></p>
+<p>Ursache: <%= exception.getMessage() %>
+</p>
 <a href="index.jsp">Zurück zur Startseite</a>
 </body>
 </html>

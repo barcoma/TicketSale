@@ -1,7 +1,6 @@
 package va.a6.ticketservice;
 
 import javax.servlet.ServletContext;
-
 import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -11,15 +10,15 @@ import java.sql.SQLException;
 public class TicketSaleDBHandler {
     private DataSource dataSource;
 
-    TicketSaleDBHandler(){
+    TicketSaleDBHandler() {
         ServletContext context = MyServletContextListener.ctx;
         dataSource = (DataSource) context.getAttribute("dataSource");
     }
 
-    public void updateTicketTable(Ticket ticket){
+    public void updateTicketTable(Ticket ticket) {
         String sql = "UPDATE ticket SET state = ?, owner = ? WHERE id=?";
-        try(Connection connection = dataSource.getConnection();
-            PreparedStatement preparedStatement = connection.prepareStatement(sql)){
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
             try {
                 connection.setAutoCommit(false);
                 preparedStatement.setString(1, ticket.getState().toString());
@@ -27,22 +26,22 @@ public class TicketSaleDBHandler {
                 preparedStatement.setInt(3, ticket.getId());
                 preparedStatement.execute();
                 connection.commit();
-            } catch (SQLException e){
+            } catch (SQLException e) {
                 connection.rollback();
             }
-        } catch (SQLException e){
+        } catch (SQLException e) {
             throw new RuntimeException();
         }
     }
 
     public TicketState getTicketFromDB(int id) {
-        String state ="";
+        String state = "";
         String sql = "SELECT state FROM ticket WHERE id=?;";
-        try(Connection connection = dataSource.getConnection();
-            PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
             preparedStatement.setInt(1, id);
             ResultSet rs = preparedStatement.executeQuery();
-            while(rs.next()) {
+            while (rs.next()) {
                 state = rs.getString("state");
             }
             return TicketState.valueOf(state);
@@ -51,10 +50,10 @@ public class TicketSaleDBHandler {
         }
     }
 
-    public void updateOptionsTable(boolean areReservationPossible){
+    public void updateOptionsTable(boolean areReservationPossible) {
         String sql = "UPDATE options SET reservationsPossible";
-        try(Connection connection = dataSource.getConnection();
-            PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
             preparedStatement.setInt(1, areReservationPossible ? 1 : 0);
             preparedStatement.executeUpdate();
         } catch (SQLException e) {

@@ -5,7 +5,7 @@ public class Ticket {
     private String ticketOwner;
     private int id;
 
-    Ticket(int _id){
+    Ticket(int _id) {
         this.id = _id;
     }
 
