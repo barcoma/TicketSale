@@ -1,4 +1,7 @@
+@import url('https://fonts.googleapis.com/css?family=Raleway:400,700&display=swap');
+
 body{
+  font-family: 'Raleway', sans-serif;
 }
 
 .ticket-container{
@@ -18,61 +21,80 @@ body{
 }
 
 .RESERVED{
-  background-color: darkgoldenrod;
+  background-color: #994F15;
 }
 
 .FREE{
-  background-color: palegreen;
+  background-color: limegreen;
 }
 
 .SOLD{
-  background-color: darkred;
+  background-color: firebrick;
 }
 
 a{
   color: black;
 }
 
-nav{
+nav {
   ul {
     list-style-type: none;
-    li{
+
+    li {
       margin: 1% 0 0 0;
+
+      a:hover {
+        color: blue;
+      }
     }
   }
 }
 
-.hidden-input{
-  display: none;
-}
+  .hidden-input {
+    display: none;
+  }
 
 
+  .dropdown-menu {
+    position: absolute;
+    z-index: 1000;
+    display: none;
+    min-width: 160px;
+    padding: 5px 5px;
+    margin: 0 0 0 0;
+    list-style: none;
+    background-color: whitesmoke;
+    border: 1px solid #000;
+    border-radius: 3px;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
+    background-clip: padding-box;
+    li{
+      form{
+        display: inline-block;
+        margin: 0;
+      }
+      }
+    }
 
-.dropdown-menu {
-  position: absolute;
-  z-index: 1000;
-  display: none;
-  min-width: 160px;
-  padding: 5px 0;
-  margin: 0 0 0 0;
-  list-style: none;
-  background-color: #fff;
-  border: 1px solid #ccc;
-  border-radius: 3px;
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
-  background-clip: padding-box;
+
+.dropdown-element{
+  border: none;
+  background: none;
+  font-family: "Raleway", sans-serif;
+  margin: 0;
+  font-size: 1em;
+  .dropdown-element:hover{
+    cursor: pointer;
+    color: darkgrey;
+  }
 }
-.dropdown-menu a {
-  text-decoration: none;
-}
-.dropdown-menu a li {
-  font-size: 12px;
-  font-family: arial,sans-serif;
-  color: #222;
-  padding: 5px 15px;
-}
-.dropdown-menu a li:hover {
-  background-color: #bae2fc;
-}
+
+  .dropdown-menu a {
+    text-decoration: none;
+  }
+
+  .dropdown-menu li a:hover {
+    color: darkgrey;
+  }
 
 

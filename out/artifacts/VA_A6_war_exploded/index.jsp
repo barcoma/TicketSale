@@ -32,17 +32,19 @@
       </div>
           <ul class="dropdown-menu">
               <li>
-                  <form name="verkauf" action="TicketHandler" method="post">
+                  <form  class="dropdown-element" name="verkauf" action="TicketHandler" method="post">
                       <input class="hidden-input" name="methodToExcecute" value="buy"/>
                       <input class="hidden-input" name="ticketId" value="<%=ticket.getId() %>"/>
-                      <button type="submit">Ticket kaufen</button>
+                      <button class="dropdown-element" type="submit">Ticket kaufen</button>
                   </form>
               </li>
               <li>
                     <%
                         if (ticketSale.isReservationPossible()) {
                     %>
-                    <a href="Reservierung_eines_Tickets.html">Ticket reservieren</a><br/>
+                  <button class="dropdown-element"><a href="Reservierung_eines_Tickets.html">Ticket reservieren</a><br/></button>
+
+
                     <%
                       } else {
                      %>
@@ -52,11 +54,12 @@
                   %>
               </li>
               <li>
-
                   <%
                       if (ticketSale.isReservationPossible()) {
                   %>
-                  <a href="Verkauf_eines_reservierten_Tickets.html">Reserviertes Ticket kaufen</a><br />
+                    <button class="dropdown-element">
+                        <a href="Verkauf_eines_reservierten_Tickets.html">Reserviertes Ticket kaufen</a><br/>
+                    </button>
                   <%
                   } else {
                   %>
@@ -66,20 +69,19 @@
                   %>
               </li>
               <li>
-                  <form name="verkauf" action="TicketHandler" method="post">
+                  <form class="dropdown-element" name="verkauf" action="TicketHandler" method="post">
                       <input class="hidden-input" name="methodToExcecute" value="cancelTicket"/>
                       <input class="hidden-input" name="ticketId" value="<%=ticket.getId() %>"/>
-                      <button type="submit">Ticket storno</button>
+                      <button class="dropdown-element" type="submit">Ticket storno</button>
                   </form>
               </li>
               <li>
-                  <a href="Reservierungen_aufheben.html">Alle Reservierungen aufheben</a>
+                  <button class="dropdown-element">
+                      <a href="Reservierungen_aufheben.html">Alle Reservierungen aufheben</a><br/>
+                  </button>
               </li>
           </ul>
       </div>
-
-
-
 
     <%}%>
   </div>
@@ -156,7 +158,7 @@
           if(!menu) return;
           if (menu.style.display !== 'block') {
               menu.style.display = 'block';
-              this.style.backgroundColor = "blue";
+              this.style.backgroundColor = "#228C22";
               if(toClose)
                   toClose.style.display="none";
               toClose  = menu;
